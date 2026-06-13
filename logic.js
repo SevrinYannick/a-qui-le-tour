@@ -23,3 +23,12 @@ RoueGame.logic.pickPlayers = function (pool, n, rng) {
   }
   return copy.slice(0, count);
 };
+
+// Voir la convention d'angle en tête de plan.
+RoueGame.logic.winningIndex = function (rotation, count) {
+  if (count <= 0) return -1;
+  const TAU = 2 * Math.PI;
+  const seg = TAU / count;
+  const r = ((rotation % TAU) + TAU) % TAU;           // rotation normalisée [0, 2π)
+  return (count - Math.floor(r / seg)) % count;
+};

@@ -41,4 +41,23 @@ RoueTest.test('pickPlayers respecte un rng injecté (déterministe)', function (
   RoueTest.assertDeep(res, ['A', 'B']);
 });
 
+RoueTest.test('winningIndex: rotation nulle -> segment 0', function () {
+  RoueTest.assertEqual(RoueGame.logic.winningIndex(0, 4), 0);
+});
+
+RoueTest.test('winningIndex: rotation d\'un segment horaire -> dernier segment', function () {
+  const seg = (2 * Math.PI) / 4;
+  RoueTest.assertEqual(RoueGame.logic.winningIndex(seg, 4), 3);
+});
+
+RoueTest.test('winningIndex: milieu du segment 0 reste 0', function () {
+  const seg = (2 * Math.PI) / 4;
+  RoueTest.assertEqual(RoueGame.logic.winningIndex(seg / 2, 4), 0);
+});
+
+RoueTest.test('winningIndex: gère les rotations > 2π', function () {
+  const full = 2 * Math.PI;
+  RoueTest.assertEqual(RoueGame.logic.winningIndex(full * 3, 4), 0);
+});
+
 RoueTest.report();
