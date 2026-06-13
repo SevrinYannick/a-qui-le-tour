@@ -18,6 +18,7 @@ body {
 }
 .topbar { text-align: center; padding: 18px; }
 .topbar h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; }
+.topbar .tagline { margin: 4px 0 0; font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; }
 
 .layout {
   display: flex;
