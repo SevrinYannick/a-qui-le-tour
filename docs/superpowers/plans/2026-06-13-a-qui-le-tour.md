@@ -1,4 +1,4 @@
-# Roue de jeux — Plan d'implémentation
+# À qui le tour ? — Plan d'implémentation
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -58,12 +58,12 @@ printf '.superpowers/\n.DS_Store\n' > .gitignore
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roue de jeux</title>
+  <title>À qui le tour ?</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
-    <h1>🎡 Roue de jeux</h1>
+    <h1>🎡 À qui le tour ?</h1>
   </header>
 
   <main class="layout">
@@ -219,7 +219,7 @@ git commit -m "chore: squelette du projet roue de jeux"
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Tests — Roue de jeux</title>
+  <title>Tests — À qui le tour ?</title>
 </head>
 <body>
   <div id="out"></div>

@@ -4,13 +4,13 @@ Guide pour travailler sur ce projet.
 
 ## Le projet
 
-**Roue de jeux** — application web ludique de type « roue de la fortune » pour
-soirées jeux. On saisit des joueurs et des jeux (chacun avec un nombre de
+**À qui le tour ?** — application web ludique de type « roue de la fortune »
+pour soirées jeux. On saisit des joueurs et des jeux (chacun avec un nombre de
 participants), on fait tourner la roue, elle tombe sur un jeu et tire au hasard
 les joueurs correspondants. On peut relancer le tirage des joueurs sans refaire
 tourner la roue.
 
-Spec de design : `docs/superpowers/specs/2026-06-13-roue-de-jeux-design.md`.
+Spec de design : `docs/superpowers/specs/2026-06-13-a-qui-le-tour-design.md`.
 
 ## Stack & contraintes
 
@@ -31,6 +31,8 @@ Aucun serveur requis.
 - `index.html` — structure de la page (panneau réglages + scène roue).
 - `styles.css` — thème « fête foraine » (multicolore vif, fond sombre, jante
   noire, ampoules blanches).
+- `logic.js` — helpers purs et testables (normalisation des noms, détection des
+  doublons, tirage des joueurs).
 - `storage.js` — état + localStorage (joueurs, jeux, tout effacer).
 - `wheel.js` — dessin Canvas de la roue + animation de rotation.
 - `app.js` — câblage UI, orchestration du spin, tirage des joueurs, résultat.
