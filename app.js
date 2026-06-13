@@ -105,3 +105,87 @@ window.RoueGame = window.RoueGame || {};
 
   document.addEventListener('DOMContentLoaded', start);
 })();
+
+(function () {
+  const store = RoueGame.store;
+  const Wheel = RoueGame.Wheel;
+  let currentGame = null; // jeu actuellement tiré
+
+  function stageEl() {
+    return {
+      spin: document.getElementById('spin'),
+      stageMsg: document.getElementById('stage-msg'),
+      result: document.getElementById('result'),
+      resultGame: document.getElementById('result-game'),
+      resultPlayers: document.getElementById('result-players'),
+      reroll: document.getElementById('reroll'),
+      removeGame: document.getElementById('remove-game')
+    };
+  }
+
+  function updateSpinState() {
+    const s = stageEl();
+    const players = store.getState().players;
+    const games = store.getState().games;
+    let reason = '';
+    if (games.length === 0) reason = 'Ajoute au moins un jeu pour tourner.';
+    else if (players.length === 0) reason = 'Ajoute au moins un joueur pour tourner.';
+    s.spin.disabled = reason !== '' || Wheel.isSpinning();
+    s.stageMsg.textContent = reason;
+  }
+
+  function clearResult() {
+    const s = stageEl();
+    currentGame = null;
+    s.result.classList.add('hidden');
+  }
+
+  function drawPlayersFor(game) {
+    const players = store.getState().players;
+    const chosen = RoueGame.logic.pickPlayers(players, game.playerCount);
+    const s = stageEl();
+    s.resultGame.textContent = '🎲 ' + game.name;
+    s.resultPlayers.innerHTML = chosen.map(function (p) {
+      return '<li>' + RoueGame.escapeHtml(p) + '</li>';
+    }).join('');
+  }
+
+  function showResult(game) {
+    const s = stageEl();
+    currentGame = game;
+    s.result.classList.remove('hidden');
+    drawPlayersFor(game);
+  }
+
+  function bindStage() {
+    const s = stageEl();
+
+    s.spin.addEventListener('click', function () {
+      const games = store.getState().games;
+      if (games.length === 0 || store.getState().players.length === 0) return;
+      clearResult();
+      updateSpinState(); // désactive pendant le spin
+      Wheel.spin(function (idx) {
+        const game = store.getState().games[idx];
+        updateSpinState();
+        if (game) showResult(game);
+      });
+    });
+
+    s.reroll.addEventListener('click', function () {
+      if (currentGame) drawPlayersFor(currentGame);
+    });
+
+    s.removeGame.addEventListener('click', function () {
+      if (!currentGame) return;
+      store.removeGame(currentGame.id);
+      clearResult();
+      RoueGame.refreshAll();
+    });
+  }
+
+  // expose pour app (Task 9)
+  RoueGame.updateSpinState = updateSpinState;
+  RoueGame.clearResult = clearResult;
+  RoueGame.bindStage = bindStage;
+})();
