@@ -87,8 +87,42 @@ RoueGame.Wheel = (function () {
     ctx.lineWidth = 3; ctx.strokeStyle = RIM; ctx.stroke();
   }
 
+  let spinning = false;
+
+  function spin(onDone) {
+    const count = games.length;
+    if (spinning || count === 0) return;
+    spinning = true;
+
+    const TAU = 2 * Math.PI;
+    const start = rotation;
+    const turns = 4 + Math.floor(Math.random() * 3);        // 4 à 6 tours
+    const target = start + turns * TAU + Math.random() * TAU; // + angle aléatoire
+    const duration = 4200; // ms
+    const t0 = performance.now();
+
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function frame(now) {
+      const t = Math.min(1, (now - t0) / duration);
+      rotation = start + (target - start) * easeOutCubic(t);
+      draw();
+      if (t < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        spinning = false;
+        const idx = RoueGame.logic.winningIndex(rotation, games.length);
+        if (typeof onDone === 'function') onDone(idx);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function isSpinning() { return spinning; }
+
   return {
     init: init, setGames: setGames, draw: draw,
-    getRotation: getRotation, setRotation: setRotation
+    getRotation: getRotation, setRotation: setRotation,
+    spin: spin, isSpinning: isSpinning
   };
 })();
