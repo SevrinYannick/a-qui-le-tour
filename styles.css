@@ -37,8 +37,8 @@ body {
 .block h2 { margin: 0 0 10px; font-size: 1.1rem; color: var(--gold); }
 
 .add-row { display: flex; gap: 8px; }
-.add-row input[type="text"] { flex: 1; }
-.add-row .count { width: 64px; }
+.add-row input[type="text"] { flex: 1; min-width: 0; }
+.add-row .count { width: 64px; flex: none; }
 input {
   background: var(--panel-2);
   border: 1px solid #3a3a64;
