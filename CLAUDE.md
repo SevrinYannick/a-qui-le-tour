@@ -28,13 +28,16 @@ Aucun serveur requis.
 
 ## Structure du code
 
-- `index.html` — structure de la page (panneau réglages + scène roue).
+- `index.html` — structure de la page, sur trois colonnes : panneau réglages,
+  scène roue, panneau résultat (à droite, cadre d'attente tant que la roue n'a
+  pas tourné).
 - `styles.css` — thème « fête foraine » (multicolore vif, fond sombre, jante
-  noire, ampoules blanches).
+  noire, ampoules blanches) + mise en page responsive.
 - `logic.js` — helpers purs et testables (normalisation des noms, détection des
   doublons, tirage des joueurs).
 - `storage.js` — état + localStorage (joueurs, jeux, tout effacer).
-- `wheel.js` — dessin Canvas de la roue + animation de rotation.
+- `wheel.js` — dessin Canvas de la roue (taille responsive, net en HiDPI) +
+  animation de rotation.
 - `app.js` — câblage UI, orchestration du spin, tirage des joueurs, résultat.
 
 ## Conventions
