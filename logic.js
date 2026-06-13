@@ -30,5 +30,6 @@ RoueGame.logic.winningIndex = function (rotation, count) {
   const TAU = 2 * Math.PI;
   const seg = TAU / count;
   const r = ((rotation % TAU) + TAU) % TAU;           // rotation normalisée [0, 2π)
-  return (count - Math.floor(r / seg)) % count;
+  const atPointer = ((TAU - r) % TAU);                // angle local sous le pointeur (haut)
+  return Math.floor(atPointer / seg) % count;
 };

@@ -50,9 +50,15 @@ RoueTest.test('winningIndex: rotation d\'un segment horaire -> dernier segment',
   RoueTest.assertEqual(RoueGame.logic.winningIndex(seg, 4), 3);
 });
 
-RoueTest.test('winningIndex: milieu du segment 0 reste 0', function () {
+RoueTest.test('winningIndex: rotation à l\'intérieur du segment 0 -> 0', function () {
   const seg = (2 * Math.PI) / 4;
-  RoueTest.assertEqual(RoueGame.logic.winningIndex(seg / 2, 4), 0);
+  // un demi-segment anti-horaire amène le pointeur au milieu du segment 0
+  RoueTest.assertEqual(RoueGame.logic.winningIndex(2 * Math.PI - seg / 2, 4), 0);
+});
+
+RoueTest.test('winningIndex: un demi-segment horaire passe au segment précédent', function () {
+  const seg = (2 * Math.PI) / 4;
+  RoueTest.assertEqual(RoueGame.logic.winningIndex(seg / 2, 4), 3);
 });
 
 RoueTest.test('winningIndex: gère les rotations > 2π', function () {
