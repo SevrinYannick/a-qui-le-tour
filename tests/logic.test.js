@@ -66,4 +66,57 @@ RoueTest.test('winningIndex: gère les rotations > 2π', function () {
   RoueTest.assertEqual(RoueGame.logic.winningIndex(full * 3, 4), 0);
 });
 
+RoueTest.test('store: addPlayer ajoute et rejette les doublons/vides', function () {
+  RoueGame.store.clearAll();
+  RoueTest.assertEqual(RoueGame.store.addPlayer('Alice').ok, true);
+  RoueTest.assertEqual(RoueGame.store.addPlayer(' alice ').ok, false); // doublon
+  RoueTest.assertEqual(RoueGame.store.addPlayer('   ').ok, false);     // vide
+  RoueTest.assertDeep(RoueGame.store.getState().players, ['Alice']);
+});
+
+RoueTest.test('store: removePlayer retire par nom', function () {
+  RoueGame.store.clearAll();
+  RoueGame.store.addPlayer('Alice');
+  RoueGame.store.addPlayer('Bob');
+  RoueGame.store.removePlayer('Alice');
+  RoueTest.assertDeep(RoueGame.store.getState().players, ['Bob']);
+});
+
+RoueTest.test('store: addGame normalise le nombre (min 1) et génère un id', function () {
+  RoueGame.store.clearAll();
+  const r = RoueGame.store.addGame('Catan', 4);
+  RoueTest.assertEqual(r.ok, true);
+  const g = RoueGame.store.getState().games[0];
+  RoueTest.assertEqual(g.name, 'Catan');
+  RoueTest.assertEqual(g.playerCount, 4);
+  RoueTest.assert(!!g.id, 'id manquant');
+  RoueTest.assertEqual(RoueGame.store.addGame('X', 0).ok, true);
+  RoueTest.assertEqual(RoueGame.store.getState().games[1].playerCount, 1);
+});
+
+RoueTest.test('store: addGame rejette doublon et nom vide', function () {
+  RoueGame.store.clearAll();
+  RoueGame.store.addGame('Uno', 6);
+  RoueTest.assertEqual(RoueGame.store.addGame(' uno ', 2).ok, false);
+  RoueTest.assertEqual(RoueGame.store.addGame('', 2).ok, false);
+});
+
+RoueTest.test('store: removeGame retire par id', function () {
+  RoueGame.store.clearAll();
+  RoueGame.store.addGame('Uno', 6);
+  const id = RoueGame.store.getState().games[0].id;
+  RoueGame.store.removeGame(id);
+  RoueTest.assertEqual(RoueGame.store.getState().games.length, 0);
+});
+
+RoueTest.test('store: persistance round-trip via localStorage', function () {
+  RoueGame.store.clearAll();
+  RoueGame.store.addPlayer('Alice');
+  RoueGame.store.addGame('Catan', 4);
+  RoueGame.store.load(); // recharge depuis localStorage
+  RoueTest.assertDeep(RoueGame.store.getState().players, ['Alice']);
+  RoueTest.assertEqual(RoueGame.store.getState().games[0].name, 'Catan');
+  RoueGame.store.clearAll();
+});
+
 RoueTest.report();
