@@ -45,7 +45,7 @@
 - [ ] **Step 1 : Initialiser git et le `.gitignore`**
 
 ```bash
-cd /Users/yannick/Developer/SEVRINWEB/roue-game
+cd /Users/yannick/Developer/SEVRINWEB/a-qui-le-tour
 git init
 printf '.superpowers/\n.DS_Store\n' > .gitignore
 ```
