@@ -95,6 +95,20 @@ window.RoueGame = window.RoueGame || {};
     bind();
     refreshAll();
     RoueGame.bindStage && RoueGame.bindStage(); // défini en Task 10
+    bindResize();
+  }
+
+  // Réadapte la roue quand la fenêtre change de taille (throttlé via rAF).
+  function bindResize() {
+    let pending = false;
+    window.addEventListener('resize', function () {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        Wheel.resize();
+      });
+    });
   }
 
   // expose pour Task 10 + démarrage
@@ -116,6 +130,8 @@ window.RoueGame = window.RoueGame || {};
       spin: document.getElementById('spin'),
       stageMsg: document.getElementById('stage-msg'),
       result: document.getElementById('result'),
+      resultEmpty: document.getElementById('result-empty'),
+      resultContent: document.getElementById('result-content'),
       resultGame: document.getElementById('result-game'),
       resultPlayers: document.getElementById('result-players'),
       reroll: document.getElementById('reroll'),
@@ -137,7 +153,9 @@ window.RoueGame = window.RoueGame || {};
   function clearResult() {
     const s = stageEl();
     currentGame = null;
-    s.result.classList.add('hidden');
+    s.result.classList.add('is-empty');
+    s.resultContent.classList.add('hidden');
+    s.resultEmpty.classList.remove('hidden');
   }
 
   function drawPlayersFor(game) {
@@ -153,7 +171,9 @@ window.RoueGame = window.RoueGame || {};
   function showResult(game) {
     const s = stageEl();
     currentGame = game;
-    s.result.classList.remove('hidden');
+    s.result.classList.remove('is-empty');
+    s.resultEmpty.classList.add('hidden');
+    s.resultContent.classList.remove('hidden');
     drawPlayersFor(game);
   }
 

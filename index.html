@@ -47,8 +47,17 @@
       </div>
       <button id="spin" class="spin-btn">TOURNER</button>
       <p id="stage-msg" class="msg"></p>
+    </section>
 
-      <div id="result" class="result hidden">
+    <!-- Résultat du tirage (à droite de la roue) -->
+    <div id="result" class="result is-empty">
+      <!-- État d'attente : tant que la roue n'a pas tourné -->
+      <div id="result-empty" class="result-empty">
+        <span class="result-empty-icon">🎯</span>
+        <p>Le résultat s'affichera ici.<br>Fais tourner la roue&nbsp;!</p>
+      </div>
+      <!-- État rempli : jeu tiré + joueurs -->
+      <div id="result-content" class="hidden">
         <h2 id="result-game"></h2>
         <ul id="result-players" class="result-players"></ul>
         <div class="result-actions">
@@ -56,7 +65,7 @@
           <button id="remove-game" class="danger">Retirer ce jeu</button>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 
   <script src="logic.js"></script>
