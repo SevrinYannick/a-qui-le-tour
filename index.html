@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roue de jeux</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎡 Roue de jeux</h1>
+  </header>
+
+  <main class="layout">
+    <!-- Panneau réglages -->
+    <aside class="panel">
+      <section class="block">
+        <h2>Joueurs</h2>
+        <form id="player-form" class="add-row">
+          <input id="player-name" type="text" placeholder="Nom du joueur" autocomplete="off">
+          <button type="submit">Ajouter</button>
+        </form>
+        <p id="player-msg" class="msg"></p>
+        <ul id="player-list" class="list"></ul>
+      </section>
+
+      <section class="block">
+        <h2>Jeux</h2>
+        <form id="game-form" class="add-row">
+          <input id="game-name" type="text" placeholder="Nom du jeu" autocomplete="off">
+          <input id="game-count" type="number" min="1" value="2" class="count">
+          <button type="submit">Ajouter</button>
+        </form>
+        <p id="game-msg" class="msg"></p>
+        <ul id="game-list" class="list"></ul>
+      </section>
+
+      <button id="clear-all" class="danger">Tout effacer</button>
+    </aside>
+
+    <!-- Scène roue -->
+    <section class="stage">
+      <div class="wheel-area">
+        <div class="pointer"></div>
+        <canvas id="wheel" width="420" height="420"></canvas>
+      </div>
+      <button id="spin" class="spin-btn">TOURNER</button>
+      <p id="stage-msg" class="msg"></p>
+
+      <div id="result" class="result hidden">
+        <h2 id="result-game"></h2>
+        <ul id="result-players" class="result-players"></ul>
+        <div class="result-actions">
+          <button id="reroll">Relancer les joueurs</button>
+          <button id="remove-game" class="danger">Retirer ce jeu</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="logic.js"></script>
+  <script src="storage.js"></script>
+  <script src="wheel.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

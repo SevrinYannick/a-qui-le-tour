@@ -1,0 +1,1 @@
+window.RoueGame = window.RoueGame || {};

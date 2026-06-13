@@ -1,0 +1,7 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; margin: 0; }
+.layout { display: flex; gap: 24px; padding: 24px; }
+.panel { width: 320px; }
+.stage { flex: 1; text-align: center; }
+.hidden { display: none; }
+.wheel-area { position: relative; display: inline-block; }
